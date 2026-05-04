@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aspek Matematika dalam Balla Labbirinna Ujung Pandang</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+
+<style>
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(35px) scale(0.98); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes pageLeave {
+  from { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  to { opacity: 0; transform: translateY(-35px) scale(0.98); filter: blur(3px); }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes softZoom {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.page-transition { animation: pageEnter 650ms ease both; }
+.page-transition.is-leaving { animation: pageLeave 450ms ease both; }
+
+.page-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 24, 27, 0);
+  pointer-events: none;
+  transition: background 450ms ease;
+  z-index: 9999;
+}
+
+.page-overlay.is-active { background: rgba(24, 24, 27, 0.08); }
+
+header { animation: fadeSlideUp 650ms ease both; }
+
+main {
+  animation: fadeSlideUp 850ms ease both;
+  animation-delay: 120ms;
+}
+
+footer {
+  animation: fadeSlideUp 900ms ease both;
+  animation-delay: 180ms;
+}
+
+figure,
+.box,
+#mini-panorama {
+  animation: softZoom 800ms ease both;
+}
+
+.pressable {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.pressable:active { transform: scale(0.97); }
+
+body.menu-open { overflow: hidden; }
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  padding: 110px 24px 24px;
+  background: #f7f1e8;
+  border-right: 1px solid rgba(180, 83, 9, 0.25);
+  box-shadow: 20px 0 50px rgba(120, 53, 15, 0.15);
+  transform: translateX(-100%);
+  transition: transform 350ms ease;
+  z-index: 48;
+}
+
+.side-menu.open { transform: translateX(0); }
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 24, 27, 0);
+  pointer-events: none;
+  transition: background 350ms ease;
+  z-index: 40;
+}
+
+.menu-backdrop.open {
+  background: rgba(24, 24, 27, 0.25);
+  pointer-events: auto;
+}
+
+.menu-link {
+  display: block;
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-weight: 600;
+  color: #3f3f46;
+  transition: 250ms ease;
+}
+
+.menu-link:hover {
+  background: #fef3c7;
+  color: #92400e;
+  transform: translateX(4px);
+}
+
+.content h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #92400e;
+  border-bottom: 4px solid #b45309;
+  padding-bottom: 10px;
+  margin-top: 45px;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+}
+
+.content h3 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #b45309;
+  border-left: 6px solid #b45309;
+  padding-left: 14px;
+  margin-top: 30px;
+  margin-bottom: 12px;
+}
+
+.content p {
+  font-size: 1.08rem;
+  line-height: 1.9;
+  margin-bottom: 16px;
+  color: #27272a;
+  text-align: justify;
+}
+
+.content ul,
+.content ol {
+  margin-left: 24px;
+  margin-bottom: 18px;
+}
+
+.content ul { list-style-type: disc; }
+.content ol { list-style-type: decimal; }
+
+.content li {
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.box,
+.concept-source {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-left: 6px solid #b45309;
+  padding: 18px;
+  border-radius: 14px;
+  margin: 18px 0;
+  color: #451a03;
+}
+
+.formula-inline { margin: 20px 0; }
+
+.formula-inline .math {
+  font-size: 1.08rem;
+  margin: 12px 0 18px;
+}
+
+figure { margin: 25px 0; }
+
+figure img {
+  width: 100%;
+  max-width: 760px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 18px;
+  border: 1px solid #f3d19c;
+  box-shadow: 0 16px 35px rgba(120, 53, 15, 0.12);
+  transition: transform 350ms ease, box-shadow 350ms ease;
+}
+
+figure img:hover {
+  transform: scale(1.015);
+  box-shadow: 0 20px 45px rgba(120, 53, 15, 0.2);
+}
+
+figcaption {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #92400e;
+  margin-top: 10px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+#mini-panorama {
+  width: 100%;
+  height: 500px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #f3d19c;
+  box-shadow: 0 16px 35px rgba(120, 53, 15, 0.12);
+  margin: 20px 0;
+}
+
+@media (max-width: 640px) {
+  .content h2 { font-size: 1.55rem; }
+  .content h3 { font-size: 1.25rem; }
+  .content p { font-size: 1rem; }
+  #mini-panorama { height: 320px; }
+}
+</style>
+</head>
+
+<body class="bg-[#f7f1e8] text-zinc-800 antialiased page-transition">
+
+<header class="sticky top-0 z-50 bg-[#f7f1e8]/95 backdrop-blur-md border-b border-amber-200">
+  <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <button 
+        id="menuBtn" 
+        type="button"
+        class="pressable inline-flex h-12 w-12 items-center justify-center rounded-xl border border-amber-200 bg-white/80 text-zinc-800 shadow-sm hover:bg-amber-100 transition relative z-50"
+        aria-label="Buka menu"
+      >
+        <span id="menuIcon" class="text-3xl leading-none">☰</span>
+      </button>
+
+      <div>
+        <h1 class="text-lg sm:text-xl font-bold text-zinc-900">Balla Labbirinna Ujung Pandang</h1>
+        <p class="text-xs tracking-[0.25em] text-amber-700">Makassar</p>
+      </div>
+    </div>
+
+    <img src="assets/images/logo.png" alt="Logo" class="h-12 w-12 object-contain">
+  </div>
+</header>
+
+<div id="menuBackdrop" class="menu-backdrop"></div>
+
+<aside id="mobileMenu" class="side-menu">
+  <nav class="flex flex-col gap-3 text-sm">
+    <a href="index3.html" class="menu-link">Beranda</a>
+    <a href="vtour.html" class="menu-link">Tur Virtual</a>
+    <a href="article.html" class="menu-link">Artikel Matematika</a>
+    <a href="projectivegeometri.html" class="menu-link">Projective Geometry</a>
+    <a href="3dmodel.html" class="menu-link">3D Desain</a>
+    <a href="video.html" class="menu-link">Video Drone</a>
+  </nav>
+</aside>
+
+<main class="max-w-5xl mx-auto px-6 py-12 content">
+
+  <section class="text-center mb-14">
+    <p class="inline-flex items-center justify-center rounded-full border border-amber-500 px-5 py-2 text-sm md:text-base font-semibold tracking-[0.25em] text-amber-800 mb-6 text-center">
+      ETNOMATEMATIKA BALLA LABBIRINNA
+    </p>
+
+    <h1 class="text-4xl md:text-6xl font-extrabold text-amber-900 leading-tight mb-6">
+      Aspek Matematika dalam Balla Labbirinna Ujung Pandang
+    </h1>
+
+    <p class="text-lg md:text-xl text-amber-800 max-w-4xl mx-auto leading-relaxed text-center">
+      Mempelajari keterkaitan antara desain dan struktur matematika dalam arsitektur Balla Labbirinna Ujung Pandang.
+    </p>
+  </section>
+
+  <h2>1. Pendahuluan</h2>
+
+  <p>
+    Matematika sering dipandang sebagai ilmu yang abstrak dan terpisah dari nilai budaya, sehingga pembelajarannya kerap terasa jauh dari kehidupan sehari-hari. Padahal, sejak dahulu masyarakat di berbagai belahan dunia telah menerapkan prinsip-prinsip matematika dalam aktivitas budaya mereka. Kesadaran ini melahirkan etnomatematika, yaitu disiplin yang mempelajari hubungan antara budaya dan konsep matematika dalam kehidupan masyarakat.
+  </p>
+
+  <p>
+    Salah satu bentuk penerapan etnomatematika tampak pada arsitektur tradisional, seperti Rumah Adat Balla Labbirinna di Ujung Pandang, Makassar. Rumah panggung ini memiliki tiga bagian utama, yaitu <em>siring</em>, <em>kalle balla</em>, dan <em>pamakang</em>, yang mencerminkan pandangan kosmos masyarakat Makassar tentang tiga lapisan alam, yakni atas, tengah, dan bawah.
+  </p>
+
+  <p>
+    Dari sisi matematis, rumah ini menunjukkan penerapan konsep geometri, simetri, dan proporsi. Atap segitiga atau <em>timpa’ laja</em> melambangkan keseimbangan, sedangkan denah persegi empat merepresentasikan konsep <em>Sulapa Appa’</em>, yaitu pandangan kosmologis Makassar tentang empat unsur alam: api, air, angin, dan tanah.
+  </p>
+
+  <p>
+    Oleh karena itu, kajian etnomatematika terhadap Rumah Adat Balla Labbirinna penting dilakukan untuk menelusuri nilai-nilai matematis, budaya, dan kearifan lokal yang terkandung di dalamnya.
+  </p>
+
+  <figure>
+    <img src="assets/images/rumah_labbirina2.png" alt="Ilustrasi tampak depan Balla Labbirinna Ujung Pandang">
+    <figcaption>Visualisasi tampak depan Balla Labbirinna Ujung Pandang.</figcaption>
+  </figure>
+
+  <h2>2. Konsep Matematika dalam Struktur Balla Labbirinna Ujung Pandang</h2>
+
+  <p>
+    Dari observasi yang dilakukan di Balla Labbirinna Ujung Pandang dan hasil kajian literatur, dapat diketahui bahwa bangunan ini mengandung berbagai konsep matematika. Analisis etnomatematika pada Balla Labbirinna dapat dibagi berdasarkan bagian atas atau <em>pammakang</em>, bagian tengah atau <em>kalle balla</em>, dan bagian bawah atau <em>siring</em>.
+  </p>
+
+  <h3>2.A Atap Timpa’ Laja Berbentuk Segitiga dan Simetri Lipat</h3>
+
+  <p class="concept-source">
+    <strong>Ditemukan pada:</strong> bagian atap atau <em>timpa’ laja</em>.
+  </p>
+
+  <figure>
+    <img src="assets/images/atap4.png" alt="Atap timpa laja berbentuk segitiga">
+    <figcaption>Atap timpa’ laja berbentuk segitiga dengan simetri lipat vertikal.</figcaption>
+  </figure>
+
+  <p>
+    Segitiga merupakan bangun datar yang memiliki tiga sisi dan tiga sudut, dengan jumlah besar sudutnya selalu 180°. Pada struktur <em>timpa’ laja</em>, dua sisi miring memiliki panjang yang sama dan bertemu di puncak atap, sementara sisi alasnya sejajar dengan lantai rumah.
+  </p>
+
+  <p>
+    Hal ini menunjukkan penerapan konsep geometri bangun datar, terutama prinsip kesebangunan dan keseimbangan proporsional antar sisi. Selain itu, bentuk atap juga memiliki simetri lipat vertikal, di mana sisi kiri dan kanan merupakan cerminan terhadap sumbu tengah rumah.
+  </p>
+
+  <div class="box">
+    <p><strong>Contoh perhitungan sisi miring atap:</strong></p>
+    <p>Jika lebar rumah adalah 8 meter dan tinggi atap dari alas ke puncak adalah 3 meter, maka setengah lebar rumah adalah 4 meter.</p>
+    <p class="math">$$s = \sqrt{4^2 + 3^2} = \sqrt{25} = 5 \text{ meter}$$</p>
+    <p>Dengan demikian, setiap sisi miring atap memiliki panjang sekitar <strong>5 meter</strong>.</p>
+  </div>
+
+  <div class="box">
+    <p><strong>Contoh perhitungan sudut kemiringan:</strong></p>
+    <p class="math">$$\tan \theta = \frac{\text{tinggi atap}}{\text{setengah lebar rumah}} = \frac{3}{4}$$</p>
+    <p class="math">$$\theta = \tan^{-1}\left(\frac{3}{4}\right) \approx 36.9^\circ$$</p>
+    <p>Hasil ini menunjukkan bahwa <em>timpa’ laja</em> memiliki sudut kemiringan sekitar 37°.</p>
+  </div>
+
+  <h3>2.B Atap Timpa’ Laja Berbentuk Prisma Segitiga</h3>
+
+  <p class="concept-source">
+    <strong>Ditemukan pada:</strong> ruang di bawah struktur atap.
+  </p>
+
+  <figure>
+    <img src="assets/images/timpa.png" alt="Atap timpa laja berbentuk prisma segitiga">
+    <figcaption>Atap timpa’ laja berbentuk prisma segitiga.</figcaption>
+  </figure>
+
+  <p>
+    Secara matematis, bentuk atap <em>timpa’ laja</em> dapat dimodelkan sebagai prisma segitiga. Volume prisma segitiga dapat dihitung menggunakan rumus berikut:
+  </p>
+
+  <div class="formula-inline">
+    <p class="math">$$V = L_{\text{alas}} \times t$$</p>
+  </div>
+
+  <div class="box">
+    <p><strong>Contoh perhitungan:</strong></p>
+    <p>Jika alas prisma berbentuk segitiga sama kaki dengan lebar rumah 8 meter dan tinggi segitiga 3 meter, maka:</p>
+    <p class="math">$$L_{\text{alas}} = \frac{1}{2} \times 8 \times 3 = 12\,\text{m}^2$$</p>
+    <p>Apabila panjang rumah adalah 10 meter, maka volume prisma segitiga atap adalah:</p>
+    <p class="math">$$V = 12 \times 10 = 120\,\text{m}^3$$</p>
+    <p>Artinya, ruang di bawah atap <em>timpa’ laja</em> memiliki volume sekitar <strong>120 meter kubik</strong>.</p>
+  </div>
+
+  <h3>2.C Sambulayang/Timba Silla sebagai Barisan Aritmetika</h3>
+
+  <p class="concept-source">
+    <strong>Ditemukan pada:</strong> tingkatan tutup bubungan depan dan belakang atap.
+  </p>
+
+  <figure>
+    <img src="assets/images/sambulayang2.png" alt="Sambulayang sebagai barisan aritmetika">
+    <figcaption>Sambulayang atau timba silla sebagai barisan aritmetika.</figcaption>
+  </figure>
+
+  <p>
+    Pada atap Balla Labbirinna Ujung Pandang terdapat sambulayang pada tutup bubungan depan dan belakang atap. Bagian sambulayang terdiri dari satu, tiga, hingga lima tingkat. Jumlah tingkatan tersebut menunjukkan penerapan konsep barisan aritmetika.
+  </p>
+
+  <p>
+    Tingkatan disusun secara ganjil, yaitu 1, 3, dan 5, dengan beda tetap 2. Secara matematis, barisan ini dapat dirumuskan sebagai berikut:
+  </p>
+
+  <div class="formula-inline">
+    <p class="math">$$U_n = a + (n - 1)b$$</p>
+  </div>
+
+  <p>
+    Dengan \(a = 1\) dan \(b = 2\), barisan bilangan ganjil tersebut mencerminkan pola pertumbuhan bertingkat yang teratur dan menunjukkan proporsi vertikal yang harmonis antara tiap lapisan.
+  </p>
+
+  <h3>2.D Kalle Balla Berbentuk Balok</h3>
+
+  <p class="concept-source">
+    <strong>Ditemukan pada:</strong> bagian tengah rumah atau <em>kalle balla</em>.
+  </p>
+
+  <figure>
+    <img src="assets/images/kale_balla.png" alt="Kalle balla berbentuk balok">
+    <figcaption>Kalle balla berbentuk balok.</figcaption>
+  </figure>
+
+  <p>
+    Secara geometris, bagian tengah rumah adat Balla Labbirinna Ujung Pandang yang dikenal sebagai <em>kalle balla</em> dapat dimodelkan sebagai bangun ruang balok. Dalam konteks matematika, balok merupakan bangun ruang yang memiliki enam sisi berbentuk persegi panjang, dengan pasangan sisi yang saling sejajar dan kongruen.
+  </p>
+
+  <div class="formula-inline">
+    <p><strong>Rumus luas permukaan balok:</strong></p>
+    <p class="math">$$L = 2(pl + pt + lt)$$</p>
+
+    <p><strong>Rumus volume balok:</strong></p>
+    <p class="math">$$V = p \times l \times t$$</p>
+  </div>
+
+  <div class="box">
+    <p><strong>Contoh perhitungan:</strong></p>
+    <p>Jika panjang <em>kalle balla</em> adalah 10 meter, lebar 8 meter, dan tinggi 4 meter, maka volume ruangnya adalah:</p>
+    <p class="math">$$V = 10 \times 8 \times 4 = 320\,\text{m}^3$$</p>
+    <p>Perhitungan ini dapat membantu memperkirakan kebutuhan material dan menunjukkan penerapan langsung konsep bangun ruang dalam konstruksi tradisional.</p>
+  </div>
+
+  <h3>2.E Pintu dan Jendela Berbentuk Persegi Panjang</h3>
+
+  <p class="concept-source">
+    <strong>Ditemukan pada:</strong> pintu dan jendela Balla Labbirinna.
+  </p>
+
+  <figure>
+    <img src="assets/images/pintu_jendela.png" alt="Pintu dan jendela berbentuk persegi panjang">
+    <figcaption>Pintu dan jendela berbentuk persegi panjang.</figcaption>
+  </figure>
+
+  <p>
+    Pada rumah adat Balla Labbirinna Ujung Pandang, pintu dan jendela memiliki bentuk persegi panjang. Secara matematis, persegi panjang merupakan bangun datar segi empat yang memiliki empat sudut siku-siku dan dua pasang sisi sejajar yang sama panjang.
+  </p>
+
+  <div class="formula-inline">
+    <p><strong>Rumus luas dan keliling persegi panjang:</strong></p>
+    <p class="math">$$L = p \times l \quad \text{dan} \quad K = 2(p + l)$$</p>
+  </div>
+
+  <div class="box">
+    <p><strong>Contoh perhitungan:</strong></p>
+    <p>Jika satu jendela memiliki panjang 1,2 meter dan lebar 0,8 meter, maka luasnya adalah:</p>
+    <p class="math">$$L = 1{,}2 \times 0{,}8 = 0{,}96\,\text{m}^2$$</p>
+    <p>Dengan empat jendela kongruen, luas total bidang jendela adalah:</p>
+    <p class="math">$$4 \times 0{,}96 = 3{,}84\,\text{m}^2$$</p>
+  </div>
+
+  <p>
+    Selain itu, jendela pada Balla Labbirinna memiliki bentuk persegi panjang yang kongruen, artinya setiap jendela memiliki ukuran dan bentuk yang sama. Kesamaan ini mencerminkan penerapan konsep kesebangunan dan kekongruenan dalam geometri.
+  </p>
+
+  <h2>3. Panorama 360° Tambahan</h2>
+
+  <p>
+    Jelajahi panorama berikut untuk melihat struktur Balla Labbirinna Ujung Pandang dari berbagai sudut pandang.
+  </p>
+
+  <div id="mini-panorama"></div>
+
+  <h2>4. Kesimpulan</h2>
+
+  <p>
+    Pada rumah adat Balla Labbirinna Ujung Pandang, dapat disimpulkan bahwa rumah adat ini mengandung berbagai konsep matematika yang terintegrasi dalam struktur dan desain arsitekturnya. Setiap bagian rumah, seperti pintu, jendela, dan tiang penyangga, memperlihatkan penerapan prinsip-prinsip matematika dalam bentuk dan proporsinya.
+  </p>
+
+  <p>
+    Selain itu, Balla Labbirinna Ujung Pandang juga sarat akan nilai-nilai budaya dan makna filosofis yang mencerminkan identitas masyarakat Makassar, seperti status sosial, keseimbangan, kerja keras, serta penghormatan terhadap leluhur dan alam.
+  </p>
+
+  <p>
+    Dengan demikian, Balla Labbirinna Ujung Pandang bukan hanya karya arsitektur tradisional, tetapi juga menjadi bukti nyata hubungan erat antara matematika dan budaya, serta menjadi sumber pembelajaran etnomatematika yang kontekstual dan bermakna.
+  </p>
+
+  <h2>5. Daftar Pustaka</h2>
+
+  <ol>
+    <li>Al-Faaruuq, A. M., & Zulkarnain, A. S. (2023). <em>Kearifan Lokal Rumah Tradisional Bugis Baranti di Kabupaten Sidrap</em>. Timpalaja: Jurnal Arsitektur dan Budaya Lokal, UIN Alauddin Makassar.</li>
+    <li>Hitam, J. (2023, Desember 22). <em>Lestarikan Adat Budaya, Disbud Kota Makassar Gelar Ritual “Appasili Balla Labbirina Ujung Pandang”</em>.</li>
+    <li>Ihsan, M. (2019). <em>Makalah Rumah Adat Suku Makassar Balla Labbirina Ujung Pandang</em>.</li>
+    <li>Imriyanti. (2020). <em>Akulturasi Arsitektur Tradisional Makassar</em>. Repository Universitas Hasanuddin.</li>
+    <li>Ja’faruddin, & Naufal, M. A. (2024). <em>Ethnomathematics: Two-Dimensional Figure Geometry Concept in the Balla Lompoa Traditional House in South Sulawesi</em>. Jurnal Pendidikan Matematika.</li>
+    <li>Nabila, Z. (2025, Juni 26). <em>Menyelami Filosofi Rumah Adat Ujung Pandang</em>.</li>
+    <li>Nirmalaaziza. (2018). <em>Arsitektur dan Budaya</em>.</li>
+    <li>Pabittei, A., Masrury, M., Arifah, S., & Abbas. (1995). <em>Benteng Somba Opu Sulawesi Selatan</em>. Departemen Pendidikan dan Kebudayaan.</li>
+    <li>Paris, M. A., & Wahyuda, S. S. (2023). <em>Eksplorasi Etnomatematika pada Rumah Adat Bubungan Tinggi</em>. Jurnal Pendidikan Matematika.</li>
+    <li>Putri, M. M., Paronda, N., & Aspikal. (2025). <em>Pemanfaatan Kearifan Lokal Rumah Adat Bugis Sebagai Media Pembelajaran Matematika di Wilayah Desa Tampo</em>. Jurnal Idea Pengabdian Masyarakat.</li>
+    <li>Sulsel, M. (2023, Desember 19). <em>Komitmen Jaga Warisan Budaya, Dinas Kebudayaan Revitalisasi Rumah Adat Ujung Pandang</em>.</li>
+    <li>Yuliani, D. (2023, Desember 21). <em>Perkuat Identitas Budaya, Dinas Kebudayaan Kota Makassar Gelar Ritual Appasili</em>.</li>
+  </ol>
+
+</main>
+
+<footer class="mt-20 bg-zinc-900 text-zinc-300">
+  <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between gap-3 text-sm">
+    <p>© 2025 · Aspek Matematika dalam Balla Labbirinna Ujung Pandang</p>
+
+    <p>
+      <a 
+        href="https://rifanarrifki1179-dev.github.io/benteng_somba_opu/" 
+        target="_blank"
+        class="text-amber-400 hover:text-amber-300 underline underline-offset-4 transition"
+      >
+        Benteng Somba Opu
+      </a>
+    </p>
+  </div>
+</footer>
+
+<div id="pageOverlay" class="page-overlay"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const body = document.body;
+  const overlay = document.getElementById("pageOverlay");
+  const menuBtn = document.getElementById("menuBtn");
+  const menuIcon = document.getElementById("menuIcon");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const menuBackdrop = document.getElementById("menuBackdrop");
+
+  if (menuBtn && mobileMenu && menuIcon && menuBackdrop) {
+    menuBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      mobileMenu.classList.toggle("open");
+      menuBackdrop.classList.toggle("open");
+      body.classList.toggle("menu-open");
+
+      menuIcon.textContent = mobileMenu.classList.contains("open") ? "×" : "☰";
+    });
+
+    menuBackdrop.addEventListener("click", () => {
+      mobileMenu.classList.remove("open");
+      menuBackdrop.classList.remove("open");
+      body.classList.remove("menu-open");
+      menuIcon.textContent = "☰";
+    });
+  }
+
+  const links = document.querySelectorAll('a[href]:not([href^="#"]):not([target="_blank"])');
+
+  links.forEach(link => {
+    link.addEventListener("click", function (e) {
+      const href = this.getAttribute("href");
+      if (!href || href.startsWith("javascript:")) return;
+
+      e.preventDefault();
+
+      body.classList.add("is-leaving");
+      if (overlay) overlay.classList.add("is-active");
+
+      setTimeout(() => {
+        window.location.href = href;
+      }, 420);
+    });
+  });
+
+  window.addEventListener("pageshow", () => {
+    body.classList.remove("is-leaving");
+    body.classList.remove("menu-open");
+    if (overlay) overlay.classList.remove("is-active");
+  });
+
+  if (typeof pannellum !== "undefined") {
+    pannellum.viewer("mini-panorama", {
+      type: "equirectangular",
+      panorama: "assets/360_images/halamandepan.jpg",
+      autoLoad: true,
+      showZoomCtrl: true,
+      compass: false,
+      hfov: 110,
+      pitch: 0,
+      yaw: 120
+    });
+  }
+});
+</script>
+
+</body>
+</html>
